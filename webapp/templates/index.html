@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container main">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="page-header">
+	<h1>NYC Subway Traffic</h1>
+      </div>
+
+      <p class="lead">Input starting date and end date to see analysis within the period:</p>
+      <form action="." method="POST" class="form-inline">
+	<div class="form-group">
+	  <div class="input-group">
+	    <div class="input-group-addon">from</div>
+	    <input type="date" class="form-control" min="2010-05-01" name="startdate">
+	    <div class="input-group-addon">to</div>
+	    <input type="date" class="form-control" min="2010-05-01" name="enddate">
+	  </div>
+	</div>
+	<button type="submit" class="btn btn-primary" type="button">Go!</button>
+      </form>
+
+      <section class="showboard" ng-controller="PanelController as panel">
+	<ul class="nav nav-pills">
+	  <li ng-class="{active: panel.isSelected(1)}"><a href ng-click="panel.selectTab(1)">Total entries and exits</a></li>
+	  <li ng-class="{active: panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Busiest station</a></li>
+	  <li ng-class="{active: panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Friday night frenzy</a></li>
+	</ul>
+
+	<div class="panel" ng-show="panel.isSelected(1)">
+	  <h4>total entries and exits</h4>
+	</div>
+	<div class="panel" ng-show="panel.isSelected(2)">
+	  <h4>busiest station</h4>
+	</div>
+	<div class="panel" ng-show="panel.isSelected(3)">
+	  <h4>friday midnight</h4>
+	</div>
+      </section>
+      
+    </div>
+  </div> <!-- panel -->
+</div>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

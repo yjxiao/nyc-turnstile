@@ -1,4 +1,6 @@
 *~
 *#
+*.pyc
+webapp/static/data
 analysis/.ipynb_checkpoints/*
 analysis/data
