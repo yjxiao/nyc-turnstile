@@ -8,7 +8,7 @@
       </div>
 
       <p class="lead">Input starting date and end date to see analysis within the period:</p>
-      <form action="." method="POST" class="form-inline">
+      <form action="stats" method="POST" class="form-inline">
 	<div class="form-group">
 	  <div class="input-group">
 	    <div class="input-group-addon">from</div>
@@ -20,22 +20,29 @@
 	<button type="submit" class="btn btn-primary" type="button">Go!</button>
       </form>
 
-      <section class="showboard" ng-controller="PanelController as panel">
-	<ul class="nav nav-pills">
-	  <li ng-class="{active: panel.isSelected(1)}"><a href ng-click="panel.selectTab(1)">Total entries and exits</a></li>
-	  <li ng-class="{active: panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Busiest station</a></li>
-	  <li ng-class="{active: panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Friday night frenzy</a></li>
-	</ul>
+      <section class="showboard">
+	<blockquote>Total entries and exits of the entire subway system<br>
+	  between <em>{{stats.start}} / {{stats.end}}</em> is <strong>{{stats.total}}</strong>.</blockquote>
 
-	<div class="panel" ng-show="panel.isSelected(1)">
-	  <h4>total entries and exits</h4>
-	</div>
-	<div class="panel" ng-show="panel.isSelected(2)">
-	  <h4>busiest station</h4>
-	</div>
-	<div class="panel" ng-show="panel.isSelected(3)">
-	  <h4>friday midnight</h4>
-	</div>
+	<blockquote>Below are top <strong>10</strong> busiest stations in this period of time</blockquote>
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+	      <th>Station</th>
+	      <th>Entries</th>
+	      <th>Exits</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for record in stats.records %}
+	    <tr>
+	      <td>{{ record.station }}</td>
+	      <td>{{ record.entries }}</td>
+	      <td>{{ record.exits }}</td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+	</table>
       </section>
       
     </div>
@@ -48,6 +55,4 @@
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 {% endblock %}
